@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(ownerId) {
+      return isAuthenticated() && request.auth.uid == ownerId;
+    }
+    
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.ownerId;
+    }
+    
+    function uidUnchanged() {
+      return !('ownerId' in request.resource.data) || request.resource.data.ownerId == request.auth.uid;
+    }
+    
+    function uidNotModified() {
+      return !('ownerId' in request.resource.data) || request.resource.data.ownerId == resource.data.ownerId;
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidString(val, minLen, maxLen) {
+      return val is string && val.size() >= minLen && val.size() <= maxLen;
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidProfile(data) {
+      return hasOnlyAllowedFields(['id', 'name', 'description', 'ownerId', 'createdAt', 'updatedAt']) &&
+             isValidString(data.name, 1, 100) &&
+             ( !('description' in data) || isValidString(data.description, 0, 500) ) &&
+             data.ownerId is string &&
+             data.createdAt is string;
+    }
+
+    function isValidWorkflow(data) {
+      return hasOnlyAllowedFields(['id', 'profileId', 'name', 'description', 'triggerType', 'status', 'ownerId', 'createdAt', 'updatedAt']) &&
+             isValidString(data.profileId, 1, 100) &&
+             isValidString(data.name, 1, 100) &&
+             ( !('description' in data) || isValidString(data.description, 0, 1000) ) &&
+             data.triggerType in ['manual', 'webhook', 'scheduled', 'event'] &&
+             data.status in ['active', 'disabled', 'draft'] &&
+             data.ownerId is string &&
+             data.createdAt is string;
+    }
+
+    function isValidRun(data) {
+      return hasOnlyAllowedFields(['id', 'workflowId', 'profileId', 'status', 'ownerId', 'startedAt', 'completedAt', 'error']) &&
+             isValidString(data.workflowId, 1, 100) &&
+             isValidString(data.profileId, 1, 100) &&
+             data.status in ['queued', 'running', 'awaiting_approval', 'completed', 'failed', 'cancelled'] &&
+             data.ownerId is string &&
+             data.startedAt is string &&
+             ( !('error' in data) || isValidString(data.error, 0, 5000) );
+    }
+
+    function isValidApproval(data) {
+      return hasOnlyAllowedFields(['id', 'runId', 'workflowId', 'status', 'requestedAt', 'resolvedAt', 'resolvedBy', 'ownerId', 'payload']) &&
+             isValidString(data.runId, 1, 100) &&
+             isValidString(data.workflowId, 1, 100) &&
+             data.status in ['pending', 'approved', 'rejected'] &&
+             data.ownerId is string &&
+             data.requestedAt is string &&
+             ( !('payload' in data) || isValidString(data.payload, 0, 10000) );
+    }
+
+    function isValidAlert(data) {
+      return hasOnlyAllowedFields(['id', 'title', 'message', 'severity', 'status', 'ownerId', 'createdAt']) &&
+             isValidString(data.title, 1, 200) &&
+             ( !('message' in data) || isValidString(data.message, 0, 2000) ) &&
+             data.severity in ['info', 'warning', 'error', 'critical'] &&
+             data.status in ['unread', 'read', 'resolved'] &&
+             data.ownerId is string &&
+             data.createdAt is string;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+    match /profiles/{docId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidProfile(request.resource.data) && uidUnchanged();
+      allow update: if isDocOwner() && isValidProfile(request.resource.data) && uidNotModified();
+      allow delete: if isDocOwner();
+    }
+
+    match /workflows/{docId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidWorkflow(request.resource.data) && uidUnchanged();
+      allow update: if isDocOwner() && isValidWorkflow(request.resource.data) && uidNotModified();
+      allow delete: if isDocOwner();
+    }
+
+    match /runs/{docId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidRun(request.resource.data) && uidUnchanged();
+      allow update: if isDocOwner() && isValidRun(request.resource.data) && uidNotModified();
+      allow delete: if isDocOwner();
+    }
+
+    match /approvals/{docId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidApproval(request.resource.data) && uidUnchanged();
+      allow update: if isDocOwner() && isValidApproval(request.resource.data) && uidNotModified();
+      allow delete: if isDocOwner();
+    }
+
+    match /alerts/{docId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidAlert(request.resource.data) && uidUnchanged();
+      allow update: if isDocOwner() && isValidAlert(request.resource.data) && uidNotModified();
+      allow delete: if isDocOwner();
+    }
+  }
+}
