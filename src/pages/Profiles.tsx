@@ -48,15 +48,15 @@ export default function Profiles() {
         </div>
 
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
               <h2 className="text-xl font-bold text-white">{activeProfile.name} Workspace</h2>
               <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                 Active
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               <div className="p-4 rounded-lg bg-zinc-800/30 border border-zinc-800/50">
                 <div className="flex items-center text-zinc-400 mb-2">
                   <Database className="w-4 h-4 mr-2" />

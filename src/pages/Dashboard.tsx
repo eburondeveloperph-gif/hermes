@@ -1,9 +1,9 @@
-import { Activity, AlertTriangle, CheckCircle, Clock, PlayCircle, XCircle } from 'lucide-react';
+import { Activity, AlertTriangle, CheckCircle, Clock, PlayCircle, XCircle, Bot } from 'lucide-react';
 
 const stats = [
   { name: 'Active Workflows', value: '24', icon: PlayCircle, color: 'text-blue-500' },
+  { name: 'AI Agents Online', value: '3/3', icon: Bot, color: 'text-purple-500' },
   { name: 'Pending Approvals', value: '7', icon: Clock, color: 'text-orange-500' },
-  { name: 'Failed Jobs (24h)', value: '3', icon: XCircle, color: 'text-red-500' },
   { name: 'Daily Task Burn', value: '1.2k', icon: Activity, color: 'text-emerald-500' },
 ];
 

@@ -22,64 +22,66 @@ export default function Workflows() {
       </div>
 
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-zinc-800 bg-zinc-900/50">
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Profile</th>
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Trigger</th>
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Last Run</th>
-              <th className="px-6 py-4 text-right text-xs font-semibold text-zinc-400 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-800">
-            {workflows.map((wf) => (
-              <tr key={wf.id} className="hover:bg-zinc-800/30 transition-colors group">
-                <td className="px-6 py-4">
-                  <div className="font-medium text-zinc-200">{wf.name}</div>
-                  <div className="text-xs text-zinc-500 mt-1 font-mono">{wf.id}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300 border border-zinc-700">
-                    {wf.profile}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center text-sm text-zinc-400">
-                    {wf.trigger === 'Schedule' ? <Clock className="w-4 h-4 mr-2" /> : <Zap className="w-4 h-4 mr-2" />}
-                    {wf.trigger}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center">
-                    <div className={`w-2 h-2 rounded-full mr-2 ${wf.status === 'active' ? 'bg-emerald-500' : 'bg-zinc-600'}`} />
-                    <span className="text-sm text-zinc-300 capitalize">{wf.status}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-sm text-zinc-400">
-                  {wf.lastRun}
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Run Now">
-                      <Play className="w-4 h-4" />
-                    </button>
-                    <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Pause">
-                      <Pause className="w-4 h-4" />
-                    </button>
-                    <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Settings">
-                      <Settings className="w-4 h-4" />
-                    </button>
-                    <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors">
-                      <MoreVertical className="w-4 h-4" />
-                    </button>
-                  </div>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[800px] lg:min-w-0">
+            <thead>
+              <tr className="border-b border-zinc-800 bg-zinc-900/50">
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Profile</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Trigger</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Last Run</th>
+                <th className="px-6 py-4 text-right text-xs font-semibold text-zinc-400 uppercase tracking-wider">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-zinc-800">
+              {workflows.map((wf) => (
+                <tr key={wf.id} className="hover:bg-zinc-800/30 transition-colors group">
+                  <td className="px-6 py-4">
+                    <div className="font-medium text-zinc-200">{wf.name}</div>
+                    <div className="text-xs text-zinc-500 mt-1 font-mono">{wf.id}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300 border border-zinc-700">
+                      {wf.profile}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center text-sm text-zinc-400">
+                      {wf.trigger === 'Schedule' ? <Clock className="w-4 h-4 mr-2" /> : <Zap className="w-4 h-4 mr-2" />}
+                      {wf.trigger}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center">
+                      <div className={`w-2 h-2 rounded-full mr-2 ${wf.status === 'active' ? 'bg-emerald-500' : 'bg-zinc-600'}`} />
+                      <span className="text-sm text-zinc-300 capitalize">{wf.status}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-zinc-400">
+                    {wf.lastRun}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex items-center justify-end space-x-2 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Run Now">
+                        <Play className="w-4 h-4" />
+                      </button>
+                      <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Pause">
+                        <Pause className="w-4 h-4" />
+                      </button>
+                      <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors" title="Settings">
+                        <Settings className="w-4 h-4" />
+                      </button>
+                      <button className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors">
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

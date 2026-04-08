@@ -6,6 +6,8 @@ import Workflows from './pages/Workflows';
 import Approvals from './pages/Approvals';
 import Logs from './pages/Logs';
 import Metrics from './pages/Metrics';
+import Agents from './pages/Agents';
+import Settings from './pages/Settings';
 
 export default function App() {
   return (
@@ -15,10 +17,12 @@ export default function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profiles" element={<Profiles />} />
+          <Route path="agents" element={<Agents />} />
           <Route path="workflows" element={<Workflows />} />
           <Route path="approvals" element={<Approvals />} />
           <Route path="logs" element={<Logs />} />
           <Route path="metrics" element={<Metrics />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </Router>

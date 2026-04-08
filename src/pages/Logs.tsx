@@ -44,8 +44,8 @@ export default function Logs() {
         </div>
       </div>
 
-      <div className="flex-1 flex gap-6 min-h-0">
-        <div className="w-1/3 flex flex-col bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-hidden">
+        <div className="w-full lg:w-1/3 flex flex-col bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden min-h-[300px] lg:min-h-0">
           <div className="p-4 border-b border-zinc-800 bg-zinc-900/50">
             <h3 className="font-semibold text-white">Recent Runs</h3>
           </div>
@@ -72,24 +72,24 @@ export default function Logs() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-          <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
+        <div className="flex-1 flex flex-col bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden min-h-[400px] lg:min-h-0">
+          <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="flex items-center space-x-3">
               <Terminal className="w-5 h-5 text-zinc-400" />
               <h3 className="font-semibold text-white">Run Details: run-1204</h3>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 w-full sm:w-auto">
               <button 
                 onClick={handleAnalyze}
                 disabled={isAnalyzing}
-                className="flex items-center px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
+                className="flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
               >
                 {isAnalyzing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <BrainCircuit className="w-4 h-4 mr-2" />}
                 {isAnalyzing ? 'Analyzing...' : 'AI Analysis'}
               </button>
-              <button className="flex items-center px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md text-sm font-medium transition-colors">
+              <button className="flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md text-sm font-medium transition-colors">
                 <RotateCcw className="w-4 h-4 mr-2" />
-                Replay Run
+                Replay
               </button>
             </div>
           </div>

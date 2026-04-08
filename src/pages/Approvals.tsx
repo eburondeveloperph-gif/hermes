@@ -38,8 +38,8 @@ export default function Approvals() {
       <div className="space-y-4">
         {approvals.map((approval) => (
           <div key={approval.id} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-            <div className="p-6 border-b border-zinc-800 flex items-start justify-between">
-              <div>
+            <div className="p-4 md:p-6 border-b border-zinc-800 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
                   <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20 flex items-center">
                     <AlertTriangle className="w-3 h-3 mr-1" />
@@ -50,22 +50,22 @@ export default function Approvals() {
                 <h3 className="text-lg font-semibold text-white">{approval.action}</h3>
                 <p className="text-sm text-zinc-400 mt-1">Requested by: {approval.workflow}</p>
               </div>
-              <div className="flex space-x-3">
-                <button className="flex items-center px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md text-sm font-medium transition-colors">
+              <div className="flex flex-wrap gap-2 w-full lg:w-auto">
+                <button className="flex-1 lg:flex-none flex items-center justify-center px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md text-sm font-medium transition-colors">
                   <Edit2 className="w-4 h-4 mr-2" />
-                  Edit Payload
+                  Edit
                 </button>
-                <button className="flex items-center px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-md text-sm font-medium transition-colors">
+                <button className="flex-1 lg:flex-none flex items-center justify-center px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-md text-sm font-medium transition-colors">
                   <X className="w-4 h-4 mr-2" />
                   Reject
                 </button>
-                <button className="flex items-center px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-sm font-medium transition-colors">
+                <button className="flex-1 lg:flex-none flex items-center justify-center px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-sm font-medium transition-colors">
                   <Check className="w-4 h-4 mr-2" />
                   Approve
                 </button>
               </div>
             </div>
-            <div className="p-6 bg-zinc-950/50">
+            <div className="p-4 md:p-6 bg-zinc-950/50">
               <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">Action Payload</h4>
               <pre className="bg-zinc-900 p-4 rounded-lg border border-zinc-800 text-sm font-mono text-zinc-300 overflow-x-auto">
                 {JSON.stringify(approval.payload, null, 2)}
